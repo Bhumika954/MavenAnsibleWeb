@@ -5,9 +5,9 @@
   tasks:
     - name: Copy the application WAR file
       copy:
-        src: "/var/snap/jenkins/4844/workspace/MavenAnsible-CICD/target/*.war"  # Path to WAR file in Jenkins workspace
+        src: "/var/snap/jenkins/4844/workspace/MavenAnsible-CICD/target/MavenAnsibleWebapp.war"  # Path to WAR file in Jenkins workspace
         dest: "/opt/tomcat/webapps/"  # Destination path on the local machine
     - name: Start the Tomcat server
       service:
-        name: tomcat
+        name: tomcat  # Use the correct service name (tomcat9 or tomcat, depending on your installation)
         state: started
