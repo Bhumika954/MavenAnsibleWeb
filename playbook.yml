@@ -1,15 +1,13 @@
-//code inside playbook.yml --in src "workspace/*/target" *-Jenkins pipeline name
 ---
-- name: Deploy to Tomcat
-  hosts: web
+- name: Deploy application to localhost
+  hosts: web  # 'web' matches the group in your hosts.ini
   become: yes
   tasks:
-    - name: Copy WAR file to Tomcat
+    - name: Copy the application WAR file
       copy:
-        src: "/var/snap/jenkins/4844/workspace/MavenAnsible-CICD/target/MavenAnsibleWebapp.war"
-        dest: "/opt/tomcat/webapps/MavenAnsibleWebapp.war"
-        remote_src: no
-    - name:  Restart Tomcat
-      systemd:
+        src: "/var/snap/jenkins/4844/workspace/MavenAnsible-CICD/target/*.war"  # Path to WAR file in Jenkins workspace
+        dest: "/opt/tomcat/webapps/"  # Destination path on the local machine
+    - name: Start the Tomcat server
+      service:
         name: tomcat
-        state: restarted
+        state: started
